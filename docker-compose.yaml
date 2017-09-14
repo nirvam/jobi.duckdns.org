@@ -1,0 +1,18 @@
+version: '2'
+services:
+  wordpress:
+    image: wordpress
+    ports:
+      - 8080:80
+    volumes:
+      - ./wordpress/:/var/www/html/
+    environment:
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: YUTNYxVaZJ8Lo323
+
+  mysql:
+    image: gcr.io/cloudsql-docker/gce-proxy:latest
+    volumes:
+      - ./wp-jobi-1-sql-key.json:/config
+    command: /cloud_sql_proxy -instances=project-hyperion:us-west1:wp-jobi=tcp:0.0.0.0:3306 -credential_file=/config
+
